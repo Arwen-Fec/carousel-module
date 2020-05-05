@@ -7,11 +7,19 @@ const connection = mysql.createConnection({
 
 connection.connect();
 
+var getImgByProductId = (id, callback) => {
+  var queryString = `SELECT * FROM colors where product_id = ${id}`;
+  connection.query(queryString, (err, data) => {
+    if (err) {
+      console.log(err);
+      console.log('theres an error retreiving all your Color pics');
+    } else {
+      callback(null, data);
+    }
+  });
+}
 
 
-
-module.exports = {
-
-};
+module.exports.getImgByProductId = getImgByProductId;
 
 

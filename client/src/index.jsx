@@ -10,8 +10,10 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      images : []
+      images : [],
+
     }
+    this.toggleNewImage = this.toggleNewImage.bind(this);
   }
 
   componentDidMount () {
@@ -19,19 +21,40 @@ class App extends React.Component {
    }
 
   getCarouselImages () {
-
+    var product_id = window.location.pathname.slice(1,2);
+    console.log(product_id);
     $.ajax({
       type: 'GET',
-      url: '/api/carousel',
-    }).done(() => {
+      url: `/api/carousel/${product_id}`,
+    }).done((data) => {
+      var urls = [];
+      for (var i = 0; i < data.length; i++) {
+        urls.push(data[i].color_url);
+      }
+      this.setState({
+        images : urls,
+        toggleImage: urls[0]
 
+      });
+      console.log(data);
+    })
+  }
+
+  toggleNewImage (image) {
+    this.setState({
+      toggleImage: image
     })
   }
 
   render () {
     return (
-    <div>
-      <Carousel images = {this.state.images}/>
+    <div class="row">
+      <div class="column">
+        <Carousel images = {this.state.images} toggleCarouselImage = {this.toggleNewImage}/>
+      </div>
+      <div>
+        <img class = "imageDisplay" src = {this.state.toggleImage}/>
+      </div>
     </div>)
   }
 }
