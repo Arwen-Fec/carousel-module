@@ -22,6 +22,20 @@ app.get('/api/carousel/:id', (req, res) => {
   });
 });
 
+app.get('/api/carouselEnlarged/:id', (req, res) => {
+  console.log('params', req.params);
+  db.getImgEnlargedByProductId(Number(req.params.id), (err, data) => {
+    if (err) {
+      //console.log(err)
+      res.status(400).send();
+    } else {
+      //console.log(data);
+      //console.log('here')
+      res.status(200).send(data);
+    }
+  });
+});
+
 
 
 app.use(express.static(__dirname + '/../client/dist'));
