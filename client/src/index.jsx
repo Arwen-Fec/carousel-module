@@ -59,6 +59,8 @@ class App extends React.Component {
         toggleImage: urls[0]
 
       });
+      $(`#a0` ).css( "border", "2px solid black" );
+
       console.log(data);
     })
   }
