@@ -11,6 +11,8 @@ class App extends React.Component {
     super(props);
     this.state = {
       images : [],
+      enlargedImages : [],
+      currentIndex : 0,
 
     }
     this.toggleNewImage = this.toggleNewImage.bind(this);
@@ -18,6 +20,7 @@ class App extends React.Component {
 
   componentDidMount () {
     this.getCarouselImages();
+    this.getCarouselEnlargedImages();
    }
 
   getCarouselImages () {
@@ -40,19 +43,43 @@ class App extends React.Component {
     })
   }
 
-  toggleNewImage (image) {
+  getCarouselEnlargedImages () {
+    var product_id = window.location.pathname.slice(1,2);
+    console.log(product_id);
+    $.ajax({
+      type: 'GET',
+      url: `/api/carouselEnlarged/${product_id}`,
+    }).done((data) => {
+      var urls = [];
+      for (var i = 0; i < data.length; i++) {
+        urls.push(data[i].color_url);
+      }
+      this.setState({
+        enlargedImages : urls,
+        toggleImage: urls[0]
+
+      });
+      $(`#a0` ).css( "border", "2px solid black" );
+
+      console.log(data);
+    })
+  }
+//change index when onClicked
+  toggleNewImage (index) {
+    $("img").css( "border", 0 );
+    $(`#a${index}` ).css( "border", "2px solid black" );
     this.setState({
-      toggleImage: image
+      toggleImage: this.state.enlargedImages[index]
     })
   }
 
   render () {
     return (
     <div class="row">
-      <div class="column">
-        <Carousel images = {this.state.images} toggleCarouselImage = {this.toggleNewImage}/>
+      <div class="column imageslider" >
+        <Carousel images = {this.state.images} toggleCarouselImage = {this.toggleNewImage} />
       </div>
-      <div>
+      <div class="column">
         <img class = "imageDisplay" src = {this.state.toggleImage}/>
       </div>
     </div>)
