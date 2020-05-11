@@ -77,7 +77,8 @@ class App extends React.Component {
     // $( ".imageDisplay" ).animate({duration: "slow",
     // easing: "easein" },2000);
     this.setState({
-      toggleImage: this.state.enlargedImages[index]
+      toggleImage: this.state.enlargedImages[index],
+      currentIndex: index
     });
   }
 
