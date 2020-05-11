@@ -1,3 +1,8 @@
+.row {
+  height: 526px;
+  width: 100%;
+}
+
 .column {
   float: left;
   max-height: 526px;
