@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
+import carouselStyles from './components/Carousel.module.css';
 
 import Carousel from './components/Carousel.jsx';
 
